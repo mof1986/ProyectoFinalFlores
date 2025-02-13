@@ -1,0 +1,29 @@
+{
+  "paises": [
+      "Argentina",
+      "Brasil",
+      "Chile"
+  ],
+  "provincias": [
+      { "nombre": "Buenos Aires", "pais": "Argentina" },
+      { "nombre": "Córdoba", "pais": "Argentina" },
+      { "nombre": "Santa Fe", "pais": "Argentina" },
+      { "nombre": "Río de Janeiro", "pais": "Brasil" },
+      { "nombre": "São Paulo", "pais": "Brasil" },
+      { "nombre": "Santiago", "pais": "Chile" },
+      { "nombre": "Valparaíso", "pais": "Chile" }
+  ],
+  "localidades": [
+      { "nombre": "La Plata", "provincia": "Buenos Aires" },
+      { "nombre": "Mar del Plata", "provincia": "Buenos Aires" },
+      { "nombre": "Córdoba Capital", "provincia": "Córdoba" },
+      { "nombre": "Villa María", "provincia": "Córdoba" },
+      { "nombre": "Rosario", "provincia": "Santa Fe" },
+      { "nombre": "Santa Fe Capital", "provincia": "Santa Fe" },
+      { "nombre": "Copacabana", "provincia": "Río de Janeiro" },
+      { "nombre": "Rio de Janeiro", "provincia": "Río de Janeiro" },
+      { "nombre": "São Paulo", "provincia": "São Paulo" },
+      { "nombre": "Santiago Centro", "provincia": "Santiago" },
+      { "nombre": "Valparaíso", "provincia": "Valparaíso" }
+  ]
+}

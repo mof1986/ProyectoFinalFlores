@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script defer src="../js/compra.js"></script>
+    <title>Simulador de Tienda - Confirmar Compra</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="../index.html">Simulador de Tienda</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="../index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./productos.html">Productos</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="./carrito.html">Carrito</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./admin.html">Modo Admin</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido Principal -->
+    <main class="container my-5">
+        <h1 class="mb-4">Confirmar Compra</h1>
+        <div id="resumen-compra" class="mb-4"></div>
+        <p>Completa los datos para el envío de tu pedido.</p>
+
+        <!-- Formulario de Envío -->
+        <form id="form-envio" class="row g-3">
+            <div class="col-md-6">
+                <label for="nombre" class="form-label">Nombre y Apellido *</label>
+                <input type="text" id="nombre" class="form-control" required>
+            </div>
+            <div class="col-md-6">
+                <label for="dni" class="form-label">DNI *</label>
+                <input type="text" id="dni" class="form-control" required>
+            </div>
+            <div class="col-md-6">
+                <label for="pais" class="form-label">País *</label>
+                <select id="pais" class="form-control" onchange="actualizarProvincias()" required>
+                    <option value="">Seleccionar País</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="provincia" class="form-label">Provincia *</label>
+                <select id="provincia" class="form-control" onchange="actualizarLocalidades()" disabled required>
+                    <option value="">Seleccionar Provincia</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="localidad" class="form-label">Localidad *</label>
+                <select id="localidad" class="form-control" disabled required>
+                    <option value="">Seleccionar Localidad</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="calle" class="form-label">Calle *</label>
+                <input type="text" id="calle" class="form-control" required>
+            </div>
+            <div class="col-md-3">
+                <label for="numero" class="form-label">Número *</label>
+                <input type="text" id="numero" class="form-control" required>
+            </div>
+            <div class="col-md-3">
+                <label for="piso" class="form-label">Piso</label>
+                <input type="text" id="piso" class="form-control">
+            </div>
+            <div class="col-md-3">
+                <label for="departamento" class="form-label">Departamento</label>
+                <input type="text" id="departamento" class="form-control">
+            </div>
+            <div class="col-md-12">
+                <label for="notas" class="form-label">Notas/Instrucciones de Entrega</label>
+                <textarea id="notas" class="form-control" rows="2"></textarea>
+            </div>
+
+            <div class="col-12 text-center mt-4">
+                <button type="submit" class="btn btn-success btn-lg">Confirmar Pedido</button>
+                <a href="./carrito.html" class="btn btn-danger btn-lg">Cancelar</a>
+            </div>
+        </form>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3">
+        <p>Simulador de Tienda - Coderhouse - Curso JS 65350</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

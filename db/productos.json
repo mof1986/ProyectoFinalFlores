@@ -1,0 +1,22 @@
+[
+    { "id": 1, "nombre": "Cemento", "descripcion": "Bolsa de 50kg. Marca: Loma Negra", "precio": 500, "stock": 10, "categoria": "Materiales de Construcción", "imagen": "../images/cemento.jpeg" },
+    { "id": 2, "nombre": "Arena", "descripcion": "Metro cúbico de arena fina", "precio": 300, "stock": 5, "categoria": "Materiales de Construcción", "imagen": "../images/arena.jpeg" },
+    { "id": 3, "nombre": "Ladrillos", "descripcion": "Ladrillo rojo, horno tradicional", "precio": 800, "stock": 20, "categoria": "Materiales de Construcción", "imagen": "../images/ladrillos.jpeg" },
+    { "id": 4, "nombre": "Pintura Blanca", "descripcion": "Balde de 20 litros", "precio": 2000, "stock": 15, "categoria": "Pinturas", "imagen": "../images/pintura-blanca.jpeg" },
+    { "id": 5, "nombre": "Pintura Negra", "descripcion": "Balde de 10 litros", "precio": 1200, "stock": 10, "categoria": "Pinturas", "imagen": "../images/pintura-negra.jpeg" },
+    { "id": 6, "nombre": "Yeso en Polvo", "descripcion": "Bolsa de 25kg", "precio": 600, "stock": 8, "categoria": "Materiales de Construcción", "imagen": "../images/yeso.jpeg" },
+    { "id": 7, "nombre": "Pegamento Cerámico", "descripcion": "Bolsa de 30kg", "precio": 900, "stock": 12, "categoria": "Adhesivos", "imagen": "../images/pegamento-ceramico.jpeg" },
+    { "id": 8, "nombre": "Madera MDF", "descripcion": "Placa 1.83m x 2.60m", "precio": 4500, "stock": 6, "categoria": "Maderas", "imagen": "../images/madera-mdf.jpeg" },
+    { "id": 9, "nombre": "Clavos para Madera", "descripcion": "Caja de 1kg", "precio": 300, "stock": 25, "categoria": "Ferretería", "imagen": "../images/clavos.jpeg" },
+    { "id": 10, "nombre": "Tornillos Autoperforantes", "descripcion": "Caja de 500 unidades", "precio": 1200, "stock": 14, "categoria": "Ferretería", "imagen": "../images/tornillos.jpeg" },
+    { "id": 11, "nombre": "Ventana de Aluminio", "descripcion": "1.20m x 1.00m. Corredera", "precio": 12000, "stock": 3, "categoria": "Aberturas", "imagen": "../images/ventana.jpeg" },
+    { "id": 12, "nombre": "Puerta de Madera", "descripcion": "Madera maciza. 2.00m x 0.80m", "precio": 15000, "stock": 4, "categoria": "Aberturas", "imagen": "../images/puerta-madera.jpeg" },
+    { "id": 13, "nombre": "Puerta de Metal", "descripcion": "Chapa inyectada con poliuretano", "precio": 17000, "stock": 2, "categoria": "Aberturas", "imagen": "../images/puerta-metal.jpeg" },
+    { "id": 14, "nombre": "Grifería Cocina", "descripcion": "Grifo monocomando acero inoxidable", "precio": 5000, "stock": 10, "categoria": "Sanitarios", "imagen": "../images/griferia-cocina.jpeg" },
+    { "id": 15, "nombre": "Inodoro Completo", "descripcion": "Incluye mochila y tapa", "precio": 22000, "stock": 5, "categoria": "Sanitarios", "imagen": "../images/inodoro.jpeg" },
+    { "id": 16, "nombre": "Lavamanos", "descripcion": "Cerámica blanca con pedestal", "precio": 8500, "stock": 6, "categoria": "Sanitarios", "imagen": "../images/lavamanos.jpeg" },
+    { "id": 17, "nombre": "Cinta Métrica", "descripcion": "5 metros con bloqueo", "precio": 700, "stock": 20, "categoria": "Herramientas", "imagen": "../images/cinta-metrica.jpeg" },
+    { "id": 18, "nombre": "Taladro Eléctrico", "descripcion": "Potencia 500W con 13 brocas", "precio": 25000, "stock": 3, "categoria": "Herramientas", "imagen": "../images/taladro.jpeg" },
+    { "id": 19, "nombre": "Nivel Láser", "descripcion": "Rango de 20m con trípode", "precio": 18000, "stock": 4, "categoria": "Herramientas", "imagen": "../images/nivel-laser.jpeg" },
+    { "id": 20, "nombre": "Martillo de Goma", "descripcion": "Cabeza de goma 500g", "precio": 1500, "stock": 15, "categoria": "Herramientas", "imagen": "../images/martillo-goma.jpeg" }
+]

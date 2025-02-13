@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--    <script defer src="./js/home.js"></script> De momento no veo necesidad de un js personalizado para esta sección-->
+    <title>Simulador de Tienda - Home</title>
+    <!--Bootstrap-->
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">Simulador de Tienda</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./pages/productos.html">Productos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./pages/carrito.html">Carrito</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./pages/admin.html">Modo Admin</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content-->
+    <main class="container my-5">
+        <h1>Bienvenido al Simulador de Tienda</h1>
+        <p>
+            Explora productos, gestiona tu carrito y administra inventarios desde el modo administrador. Usa el menú de navegación o los botones rápidos para acceder a cada sección. 
+        </p>
+        <p>Algunas de las principales features trabajadas:</p>
+        <ul>
+            <li> Carga inicial de productos desde un archivo JSON, luego gestionados en Local Storage.</li>
+            <li> Solo se muestran productos con stock disponible.</li>
+            <li> Soporte para imágenes en productos con posibilidad de carga personalizada (imagenes guardadas en "./images/").</li>
+            <li> Modificación en tiempo real del carrito con botones "+" y "-".</li>
+            <li> Confirmación al hacer ABM de productos o limpiar el carrito.</li>
+            <li> En modo administrador, los cambios afectan el Local Storage pero no el JSON original.</li>
+            <li> Se utilizan avisos de Toastify y SweetAlert al hacer ABM de los productos, edición de formularios.</li>
+            <li> FALTA: implementar parte de pago emulada, aviso de compra (recibo), eliminar consoles logs ya que solo lo usamos para debug.</li>
+            <li> FALTA: hacer precarga de formularios para agilizar tiempos.</li>
+        </ul>
+        <div class="text-center mt-4">
+            <a href="./pages/productos.html" class="btn btn-info btn-lg mx-2">Productos</a>
+            <a href="./pages/carrito.html" class="btn btn-info btn-lg mx-2">Carrito</a>
+        </div>
+    </main>
+    
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3">
+        <p>Simulador de Tienda - Coderhouse - Curso JS 65350</p>
+    </footer>
+
+    <!-- JS Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
