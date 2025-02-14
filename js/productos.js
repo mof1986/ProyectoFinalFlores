@@ -48,7 +48,6 @@ function renderizarProductos() {
                         <p class="card-text">${producto.descripcion}</p>
                         <p class="card-text">Categoría: ${producto.categoria}</p>
                         <p class="card-text">Precio: $${producto.precio}</p>
-                        <p class="card-text">Stock disponible: ${producto.stock}</p>
                         <div id="acciones-${producto.id}">
                             ${itemEnCarrito ? generarControlesCantidad(producto.id, cantidad) : 
                             `<button class="btn btn-primary" onclick="agregarAlCarrito(${producto.id})">Agregar al Carrito</button>`}
