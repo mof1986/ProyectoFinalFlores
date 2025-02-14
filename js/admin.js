@@ -1,27 +1,24 @@
-// Productos (PENDIENTE: Pensar lógica que cargue productos sin necesidad de ingresar 1ro a una sección específica, en este caso productos.html)
+// Cargamos productos desde localStorage o inicializamos vacío
 let productos = JSON.parse(localStorage.getItem("productos")) || [];
 
-// Guardar datos de PRODUCTOS en localStorage
+// Guardamos productos en localStorage
 function guardarDatos() {
     localStorage.setItem("productos", JSON.stringify(productos));
 }
 
-// Función que genera Id Único para cada producto 
+// Generamos un ID único para nuevos productos
 function generarIdUnico() {
     return productos.length > 0 ? Math.max(...productos.map(p => p.id)) + 1 : 1;
 }
 
-// Renderizar lista de productos
+// Renderizamos la lista de productos en el administrador
 function renderizarProductos() {
     const productList = document.querySelector("#product-list ul");
-    productList.innerHTML = "";
+    productList.innerHTML = productos.length === 0 
+        ? "<p class='text-center'>No hay productos disponibles.</p>"
+        : "";
 
-    if (productos.length === 0) {
-        productList.innerHTML = "<p class='text-center'>No hay productos cargados disponibles.</p>";
-        return;
-    }
-
-    productos.forEach((producto) => {
+    productos.forEach(producto => {
         const li = document.createElement("li");
         li.className = "list-group-item d-flex justify-content-between align-items-center";
         li.innerHTML = `
@@ -40,45 +37,44 @@ function renderizarProductos() {
     });
 }
 
-// Previsualizar imagen antes de guardar
-document.querySelector("#product-image").addEventListener("change", function (event) {
+// Previsualizamos la imagen antes de guardar
+document.querySelector("#product-image").addEventListener("change", event => {
     const file = event.target.files[0];
     if (file) {
         const reader = new FileReader();
-        reader.onload = function (e) {
-            document.getElementById("image-preview").src = e.target.result;
-        };
+        reader.onload = e => document.getElementById("image-preview").src = e.target.result;
         reader.readAsDataURL(file);
     }
 });
 
-// Agregar/editar producto existente con confirmación previa en SweetAlert2
-document.querySelector("#product-form").addEventListener("submit", (event) => {
-    event.preventDefault(); // Evita que la página se recargue al enviar el formulario
+// Agregar o editar un producto con confirmación
+document.querySelector("#product-form").addEventListener("submit", event => {
+    event.preventDefault();
 
     const nombre = document.querySelector("#product-name").value;
     const descripcion = document.querySelector("#product-description").value;
-    const precio = document.querySelector("#product-price").value;
-    const stock = document.querySelector("#product-stock").value;
+    const precio = parseFloat(document.querySelector("#product-price").value);
+    const stock = parseInt(document.querySelector("#product-stock").value);
     const categoria = document.querySelector("#product-category").value;
-    const imagenInput = document.querySelector("#product-image"); // Obtener la imagen
-    let imagenURL = "../images/default.png"; // Imagen por defecto si no se selecciona una nueva
+    const imagenInput = document.querySelector("#product-image");
+    let imagenURL = "../images/default.png"; 
 
     const editId = document.querySelector("#product-form").dataset.edit;
-    let mensajeConfirmacion = editId ? "¿Deseas confirmar los cambios en este producto?" : "¿Deseas agregar este nuevo producto?";
+    const mensajeConfirmacion = editId 
+        ? "¿Deseas confirmar los cambios en este producto?" 
+        : "¿Deseas agregar este nuevo producto?";
 
-    // Mostrar confirmación antes de guardar
     Swal.fire({
-        title: "¿Estás seguro?git",
+        title: "¿Estás seguro?",
         text: mensajeConfirmacion,
         icon: "question",
         showCancelButton: true,
         confirmButtonText: "Sí, guardar",
         cancelButtonText: "Cancelar",
         reverseButtons: true
-    }).then((result) => {
+    }).then(result => {
         if (result.isConfirmed) {
-            let mensajeFinal = "";
+            let mensajeFinal;
 
             if (editId) {
                 // Editar producto existente
@@ -86,60 +82,41 @@ document.querySelector("#product-form").addEventListener("submit", (event) => {
                 if (producto) {
                     producto.nombre = nombre;
                     producto.descripcion = descripcion;
-                    producto.precio = parseFloat(precio);
-                    producto.stock = parseInt(stock);
+                    producto.precio = precio;
+                    producto.stock = stock;
                     producto.categoria = categoria;
-
-                    // Si se selecciona una nueva imagen, la actualizamos. De lo contrario, mantenemos la anterior.
                     if (imagenInput.files.length > 0) {
-                        const file = imagenInput.files[0];
-                        producto.imagen = `../images/${file.name}`;
+                        producto.imagen = `../images/${imagenInput.files[0].name}`;
                     }
-
-                    mensajeFinal = `El producto "${producto.nombre}" ha sido actualizado correctamente.`;
+                    mensajeFinal = `El producto "${producto.nombre}" ha sido actualizado.`;
                 }
                 document.querySelector("#product-form").removeAttribute("data-edit");
             } else {
-                // Si es un producto nuevo, le asignamos una imagen si el usuario subió una
+                // Nuevo producto
                 if (imagenInput.files.length > 0) {
-                    const file = imagenInput.files[0];
-                    imagenURL = `../images/${file.name}`;
+                    imagenURL = `../images/${imagenInput.files[0].name}`;
                 }
 
-                // Agregar nuevo producto con ID único
-                const nuevoProducto = {
+                productos.push({
                     id: generarIdUnico(),
-                    nombre,
-                    descripcion,
-                    precio: parseFloat(precio),
-                    stock: parseInt(stock),
-                    categoria,
-                    imagen: imagenURL // Se guarda la imagen asociada o la default
-                };
+                    nombre, descripcion, precio, stock, categoria, imagen: imagenURL
+                });
 
-                productos.push(nuevoProducto);
-                mensajeFinal = `El producto "${nuevoProducto.nombre}" ha sido agregado correctamente.`;
+                mensajeFinal = `El producto "${nombre}" ha sido agregado.`;
             }
 
-            // Guardar, renderizar y limpiar formulario
+            // Guardamos, renderizamos y limpiamos el formulario
             guardarDatos();
             renderizarProductos();
             document.querySelector("#product-form").reset();
-            document.getElementById("image-preview").src = "../images/default.png"; // Restaurar imagen predeterminada
+            document.getElementById("image-preview").src = "../images/default.png";
 
-            // Mostrar mensaje de éxito
-            Swal.fire({
-                title: "Producto guardado",
-                text: mensajeFinal,
-                icon: "success",
-                timer: 2000,
-                showConfirmButton: false
-            });
+            Swal.fire({ title: "Producto guardado", text: mensajeFinal, icon: "success", timer: 2000, showConfirmButton: false });
         }
     });
 });
 
-// Función para eliminar producto con confirmación de SweetAlert2
+// Eliminamos un producto con confirmación
 function eliminarProducto(id) {
     const producto = productos.find(p => p.id === id);
     if (!producto) return;
@@ -152,24 +129,18 @@ function eliminarProducto(id) {
         confirmButtonText: "Sí, eliminar",
         cancelButtonText: "Cancelar",
         reverseButtons: true
-    }).then((result) => {
+    }).then(result => {
         if (result.isConfirmed) {
             productos = productos.filter(p => p.id !== id);
             guardarDatos();
             renderizarProductos();
 
-            Swal.fire({
-                title: "Eliminado",
-                text: "El producto ha sido eliminado correctamente.",
-                icon: "success",
-                timer: 2000,
-                showConfirmButton: false
-            });
+            Swal.fire({ title: "Eliminado", text: "El producto ha sido eliminado.", icon: "success", timer: 2000, showConfirmButton: false });
         }
     });
 }
 
-// Editar producto
+// Editar producto y desplazamos la vista al formulario
 function editarProducto(id) {
     const producto = productos.find(p => p.id === id);
     if (!producto) return;
@@ -179,11 +150,13 @@ function editarProducto(id) {
     document.querySelector("#product-price").value = producto.precio;
     document.querySelector("#product-stock").value = producto.stock;
     document.querySelector("#product-category").value = producto.categoria;
-    document.getElementById("image-preview").src = producto.imagen; // Mostrar imagen actual
+    document.getElementById("image-preview").src = producto.imagen; 
     document.querySelector("#product-form").dataset.edit = id;
+
+    document.getElementById("product-form").scrollIntoView({ behavior: "smooth" });
 }
 
-// Botón para limpiar el formulario con confirmación de SweetAlert2
+// Limpiar formulario con confirmación
 document.getElementById("clear-form").addEventListener("click", () => {
     Swal.fire({
         title: "¿Limpiar formulario?",
@@ -193,21 +166,15 @@ document.getElementById("clear-form").addEventListener("click", () => {
         confirmButtonText: "Sí, limpiar",
         cancelButtonText: "Cancelar",
         reverseButtons: true
-    }).then((result) => {
+    }).then(result => {
         if (result.isConfirmed) {
             document.querySelector("#product-form").reset();
-            document.getElementById("image-preview").src = "../images/default.png"; // Restaurar imagen predeterminada
+            document.getElementById("image-preview").src = "../images/default.png";
 
-            Swal.fire({
-                title: "Formulario limpio",
-                text: "El formulario ha sido limpiado.",
-                icon: "success",
-                timer: 1500,
-                showConfirmButton: false
-            });
+            Swal.fire({ title: "Formulario limpio", text: "El formulario ha sido limpiado.", icon: "success", timer: 1500, showConfirmButton: false });
         }
     });
 });
 
-// Inicializar con render
+// Inicializamos
 renderizarProductos();

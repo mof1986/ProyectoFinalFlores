@@ -1,30 +1,24 @@
-// Productos (carga desde JSON)
+// Cargamos productos desde JSON
 let productos = [];
-let carrito = JSON.parse(localStorage.getItem("carrito")) || []; // Cargar carrito si existe
+let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
-// Cargar productos de JSON de manera asincrónica
+// Cargamos productos de JSON y almacenarlos en LocalStorage
 async function cargarProductos() {
     try {
-        //console.log("Intentando cargar productos..."); // Debug
         const response = await fetch("../db/productos.json");
-
-        if (!response.ok) {
-            throw new Error("Error al cargar los productos.");
-        }
-
+        if (!response.ok) throw new Error("Error al cargar los productos.");
+        
         productos = await response.json();
-        localStorage.setItem("productos", JSON.stringify(productos)); // Guardamos en LocalStorage
-        //console.log("Productos cargados con éxito:", productos); // Debug
+        localStorage.setItem("productos", JSON.stringify(productos));
         renderizarProductos();
-
     } catch (error) {
         console.error("Error:", error.message);
-        alert("Hubo un problema al cargar los productos. Inténtalo nuevamente.");
-        productos = []; // Vaciar productos en caso de error
+        Swal.fire("Error", "No se pudieron cargar los productos. Inténtalo nuevamente.", "error");
+        productos = [];
     }
 }
 
-// Inicializar carga de productos desde LocalStorage o JSON
+// Inicializamos productos desde LocalStorage o JSON
 function inicializarProductos() {
     const productosGuardados = localStorage.getItem("productos");
 
@@ -36,32 +30,7 @@ function inicializarProductos() {
     }
 }
 
-
-// 🛒 Función para agregar producto al carrito
-function agregarAlCarrito(id) {
-    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-    const producto = productos.find(p => p.id === id);
-
-    if (!producto || producto.stock <= 0) return;
-
-    const itemEnCarrito = carrito.find(p => p.id === id);
-    if (itemEnCarrito) {
-        if (itemEnCarrito.cantidad < producto.stock) {
-            itemEnCarrito.cantidad++;
-        } else {
-            Toastify({ text: "No hay más stock disponible", duration: 2000, gravity: "bottom", position: "right", style: { background: "red" } }).showToast();
-            return;
-        }
-    } else {
-        carrito.push({ id: producto.id, nombre: producto.nombre, cantidad: 1, precio: producto.precio });
-    }
-
-    localStorage.setItem("carrito", JSON.stringify(carrito));
-
-    Toastify({ text: "Producto agregado al carrito", duration: 2000, gravity: "bottom", position: "right", style: { background: "green" } }).showToast();
-}
-
-// Renderizar productos en la pantalla
+// Renderizamos productos en la pantalla
 function renderizarProductos() {
     const productosList = document.getElementById("productos-list");
     productosList.innerHTML = "";
@@ -79,9 +48,10 @@ function renderizarProductos() {
                         <p class="card-text">${producto.descripcion}</p>
                         <p class="card-text">Categoría: ${producto.categoria}</p>
                         <p class="card-text">Precio: $${producto.precio}</p>
+                        <p class="card-text">Stock disponible: ${producto.stock}</p>
                         <div id="acciones-${producto.id}">
                             ${itemEnCarrito ? generarControlesCantidad(producto.id, cantidad) : 
-                            `<button class="btn btn-primary" onclick="activarControles(${producto.id})">Agregar al Carrito</button>`}
+                            `<button class="btn btn-primary" onclick="agregarAlCarrito(${producto.id})">Agregar al Carrito</button>`}
                         </div>
                     </div>
                 </div>
@@ -90,7 +60,7 @@ function renderizarProductos() {
     });
 }
 
-// Generar controles de cantidad para productos en la lista
+// Generamos controles de cantidad para productos en la lista
 function generarControlesCantidad(id, cantidad) {
     return `
         <p class="card-text">Cantidad: <span id="cantidad-${id}">${cantidad}</span></p>
@@ -99,19 +69,42 @@ function generarControlesCantidad(id, cantidad) {
     `;
 }
 
-// Activar controles de cantidad al hacer clic en "Agregar al Carrito"
-function activarControles(id) {
+// Agregamos producto al carrito
+function agregarAlCarrito(id) {
     const producto = productos.find(p => p.id === id);
-    if (!producto || producto.stock === 0) return;
+    if (!producto || producto.stock <= 0) return;
 
-    // Reemplazar el botón con los controles de cantidad
+    const itemEnCarrito = carrito.find(p => p.id === id);
+    if (itemEnCarrito) {
+        if (itemEnCarrito.cantidad < producto.stock) {
+            itemEnCarrito.cantidad++;
+        } else {
+            Toastify({
+                text: "No hay más stock disponible",
+                duration: 2000,
+                gravity: "bottom",
+                position: "right",
+                style: { background: "red" }
+            }).showToast();
+            return;
+        }
+    } else {
+        carrito.push({ id: producto.id, nombre: producto.nombre, cantidad: 1, precio: producto.precio });
+    }
+
+    localStorage.setItem("carrito", JSON.stringify(carrito));
     document.getElementById(`acciones-${id}`).innerHTML = generarControlesCantidad(id, 1);
 
-    // Agregar automáticamente una unidad al carrito
-    actualizarCantidad(id, 1);
+    Toastify({
+        text: "Producto agregado al carrito",
+        duration: 2000,
+        gravity: "bottom",
+        position: "right",
+        style: { background: "green" }
+    }).showToast();
 }
 
-// Actualizar la cantidad de un producto en la lista y en el carrito
+// Actualizamos cantidad de un producto en el carrito
 function actualizarCantidad(id, cambio) {
     const producto = productos.find(p => p.id === id);
     if (!producto) return;
@@ -120,7 +113,10 @@ function actualizarCantidad(id, cambio) {
     let nuevaCantidad = (itemEnCarrito ? itemEnCarrito.cantidad : 0) + cambio;
 
     // Validación de stock y cantidad mínima
-    if (nuevaCantidad > producto.stock) return;
+    if (nuevaCantidad > producto.stock) {
+        Swal.fire("Stock Insuficiente", "No puedes agregar más unidades de este producto.", "warning");
+        return;
+    }
 
     if (nuevaCantidad < 1) {
         Swal.fire({
@@ -137,15 +133,13 @@ function actualizarCantidad(id, cambio) {
                 eliminarDelCarrito(id);
             }
         });
-    
         return;
     }
-    
 
     // Actualizar cantidad en la interfaz
     document.getElementById(`cantidad-${id}`).textContent = nuevaCantidad;
 
-    // Agregar o actualizar el carrito. 
+    // Agregar o actualizar en el carrito
     if (itemEnCarrito) {
         itemEnCarrito.cantidad = nuevaCantidad;
     } else {
@@ -153,39 +147,29 @@ function actualizarCantidad(id, cambio) {
     }
     
     guardarDatos();
-    
-    //Mensaje Toastify que indica la cantidad y el nombre del producto, abajo a la derecha con posibilidad de cierre, por X tiempo
+
     Toastify({
         text: `🛒 ${nuevaCantidad} x ${producto.nombre} agregado al carrito.`,
-        duration: 3000, // Dura este tiempo (ms)
-        gravity: "bottom", // Abajo
-        position: "right", // Derecha
-        close: true, // Se visualiza botón de cierre
-        style: {
-            background: "linear-gradient(to right, #00b09b, #96c93d)"
-        },
-    //    style.background: "linear-gradient(to right, #00b09b, #96c93d)",
+        duration: 3000,
+        gravity: "bottom",
+        position: "right",
+        close: true,
+        style: { background: "linear-gradient(to right, #00b09b, #96c93d)" }
     }).showToast();
-
 }
 
-// Guardar datos en LocalStorage
+// Funcion para guardar datos en LocalStorage
 function guardarDatos() {
     localStorage.setItem("productos", JSON.stringify(productos));
     localStorage.setItem("carrito", JSON.stringify(carrito));
 }
 
-// Eliminar producto del carrito
+// Funcion para eliminar producto del carrito
 function eliminarDelCarrito(id) {
     carrito = carrito.filter(item => item.id !== id);
     guardarDatos();
     renderizarProductos();
 }
 
-// Inicializar
-document.addEventListener("DOMContentLoaded", () => {
-    inicializarProductos();
-    
-});
-
-
+// Inicializamos la carga de productos al cargar la página
+inicializarProductos();

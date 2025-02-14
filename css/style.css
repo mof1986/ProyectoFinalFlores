@@ -1,22 +1,41 @@
-/* General */
+/* Configuración general */
 body {
     background-color: #f8f9fa;
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
+    background: url("../images/hero.jpg") no-repeat center center fixed;
+    background-size: cover;
+    position: relative;
 }
 
+/* Efecto de difuminado y efectos sobre la imagen de fondo para todas las pág. del sitio */
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.6); 
+    filter: blur(0.5px) grayscale(100%);  
+    z-index: -1; 
+}
+
+/* Espaciado en el contenido principal */
 main {
     padding-top: 20px;
-    min-height: calc(100vh - 120px); /* Espacio para el header y el footer */
+    min-height: calc(100vh - 120px);
+    position: relative;
+    z-index: 2; 
 }
 
-/* Navbar */
+/* Barra de navegación */
 .navbar {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Footer */
+/* Pie de página */
 footer {
     position: relative;
     bottom: 0;
@@ -24,7 +43,7 @@ footer {
     padding: 10px 0;
 }
 
-/* Productos y Administración */
+/* Estilos para productos y administración */
 .producto {
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -39,35 +58,39 @@ footer {
     margin-bottom: 8px;
 }
 
+/* Ajuste de altura (mínima) en tarjetas de productos */
 .card {
-    min-height: 500px; /* adapto tamaño tarjetas de visualizacion de productos */
+    min-height: 500px;
 }
 
-/* carrito flotante */
+/* Carrito flotante */
 .fixed-cart {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
+    top: 5px;
+    right: 100px;
     z-index: 1000;
 }
 .fixed-cart .btn {
-    font-size: 18px;
-    padding: 10px 20px;
+    font-size: 22px;
+    padding: 5px 20px;
 }
 
+/* Imágenes en productos */
 .card-img-top {
-    width: 100%; 
-    height: auto; 
+    width: 100%;
+    height: auto;
     max-height: 200px;
-    object-fit: contain; 
+    object-fit: contain;
 }
 
 /* Botones interactivos */
 button {
     cursor: pointer;
     border-radius: 4px;
+    transition: opacity 0.2s ease-in-out;
 }
 
+/* Estilos de botones por categoría */
 button.btn-danger {
     background-color: #dc3545;
     color: #fff;
@@ -90,7 +113,103 @@ button:hover {
     opacity: 0.9;
 }
 
-/* Ajustar espaciado de los botones en productos */
+/* Espaciado de los botones en productos */
 .producto button {
     margin: 0 5px;
+}
+
+/* Sección principal con imagen de fondo difuminada */
+.hero {
+    position: relative;
+    height: 83vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    background: url("../images/hero.jpg") no-repeat center center/cover;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.6); 
+    filter: blur(0.5px) grayscale(100%);  
+    z-index: 1;
+}
+
+/*  Contenido dentro de la sección hero */
+.hero .overlay {
+    position: relative;
+    z-index: 2; 
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+
+.hero p {
+    font-size: 1.2rem;
+}
+
+/* Botón de información */
+#info-btn {
+    font-size: 0.9rem;
+    margin-left: auto;
+}
+
+/* Centrar botones en la sección de categorías */
+.categoria-btn-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.categoria-btn-container .btn {
+    width: 250px;
+    text-align: center;
+}
+
+
+.hero .overlay {
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+
+.hero p {
+    font-size: 1.2rem;
+}
+
+/* Botón de información */
+#info-btn {
+    font-size: 0.9rem;
+    margin-left: auto;
+}
+
+/* Centrar botones en la sección de categorías */
+.categoria-btn-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px; 
+    flex-wrap: wrap;
+}
+
+.categoria-btn-container .btn {
+    width: 250px;
+    text-align: center;
 }

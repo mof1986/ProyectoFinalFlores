@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <script defer src="../js/admin.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulador de Tienda - Modo Admin</title>
+    <title>Mi Tienda Online - Administración</title>
+    
+    <!-- Estilos -->
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
 </head>
@@ -12,16 +13,17 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="../index.html">Simulador de Tienda</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <a class="navbar-brand" href="../index.html">Mi Tienda Online</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link" href="../index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../index.html">Inicio</a></li>
                     <li class="nav-item"><a class="nav-link" href="./productos.html">Productos</a></li>
                     <li class="nav-item"><a class="nav-link" href="./carrito.html">Carrito</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="./admin.html">Modo Admin</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="./admin.html">Administración</a></li>
                 </ul>
             </div>
         </div>
@@ -29,11 +31,11 @@
 
     <!-- Contenido Principal -->
     <main class="container my-5">
-        <h1 class="mb-4">Modo Administrador</h1>
+        <h1 class="mb-4">Panel de Administración</h1>
 
-        <!-- Formulario para agregar o editar productos -->
+        <!-- Formulario de Gestión de Productos -->
         <div class="mb-5">
-            <h2>Gestión de Productos</h2>
+            <h2>Agregar / Editar Productos</h2>
             <form id="product-form" class="row g-3">
                 <div class="col-md-6">
                     <label for="product-name" class="form-label">Nombre</label>
@@ -56,16 +58,16 @@
                     <input type="text" id="product-category" class="form-control" placeholder="Categoría" required>
                 </div>
 
-                <!-- 🔹 Nuevo campo para cargar imágenes -->
+                <!-- Imagen del producto -->
                 <div class="col-md-6">
                     <label for="product-image" class="form-label">Imagen del producto</label>
                     <input type="file" class="form-control" id="product-image" accept="image/png, image/jpeg">
                 </div>
 
-                <!-- 🔹 Previsualización de imagen cargada -->
+                <!-- Previsualización de imagen -->
                 <div class="col-md-6 text-center">
                     <p>Previsualización:</p>
-                    <img id="image-preview" src="../images/default.png" class="img-thumbnail" style="max-width: 150px; height: auto;">
+                    <img id="image-preview" src="../images/default.png" class="img-thumbnail" style="max-width: 200px; height: auto;">
                 </div>
 
                 <div class="col-12">
@@ -75,22 +77,24 @@
             </form>
         </div>
 
-        <!-- Listado de productos existentes -->
+        <!-- Listado de productos -->
         <div id="product-list">
-            <h2>Productos Existentes</h2>
+            <h2>Productos Registrados</h2>
             <ul class="list-group">
-                <!-- Aquí se renderizan los productos -->
+                <!-- Renderizado dinámico de productos -->
             </ul>
         </div>
     </main>
 
+
     <!-- Footer -->
     <footer class="bg-dark text-white text-center py-3">
-        <p>Simulador de Tienda - Coderhouse - Curso JS 65350</p>
+        <p>© 2025 Mi Tienda Online. Todos los derechos reservados.</p>
     </footer>
 
-    <!-- Scripts Bootstrap -->
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script defer src="../js/admin.js"></script>
 </body>
 </html>
