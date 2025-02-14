@@ -73,12 +73,21 @@ footer {
     box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3);
     border-radius: 5px;
     background: white; 
+    transition: transform 0.2s ease-in-out;
+    animation: floating 2s infinite ease-in-out;
 }
 .fixed-cart .btn {
     font-size: 22px;
     padding: 5px 20px;
 }
-
+.fixed-cart .btn:hover {
+    animation: bounce 0.8s ease-in-out;
+}
+@keyframes floating {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+    100% { transform: translateY(0); }
+}
 /* Imágenes en productos */
 .card-img-top {
     width: 100%;
